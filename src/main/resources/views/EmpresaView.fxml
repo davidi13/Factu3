@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.facturacion.factu3.controllers.EmpresaController">
+
+    <center>
+        <GridPane hgap="20" vgap="15" style="-fx-padding: 30;">
+            <columnConstraints>
+                <ColumnConstraints minWidth="220" prefWidth="250"/>
+                <ColumnConstraints minWidth="320" prefWidth="400"/>
+                <ColumnConstraints minWidth="300" prefWidth="450"/>
+            </columnConstraints>
+
+            <!-- Campos de texto con fuente más grande -->
+            <Label text="Nombre:" GridPane.rowIndex="0" GridPane.columnIndex="0" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+            <TextField fx:id="txtNombre" GridPane.rowIndex="0" GridPane.columnIndex="1" style="-fx-font-size: 14px;"/>
+
+            <Label text="Dirección:" GridPane.rowIndex="1" GridPane.columnIndex="0" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+            <TextField fx:id="txtDireccion" GridPane.rowIndex="1" GridPane.columnIndex="1" style="-fx-font-size: 14px;"/>
+
+            <Label text="Teléfono:" GridPane.rowIndex="2" GridPane.columnIndex="0" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+            <TextField fx:id="txtTelefono" GridPane.rowIndex="2" GridPane.columnIndex="1" style="-fx-font-size: 14px;"/>
+
+            <Label text="Email:" GridPane.rowIndex="3" GridPane.columnIndex="0" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+            <TextField fx:id="txtEmail" GridPane.rowIndex="3" GridPane.columnIndex="1" style="-fx-font-size: 14px;"/>
+
+            <Label text="CIF:" GridPane.rowIndex="4" GridPane.columnIndex="0" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+            <TextField fx:id="txtCIF" GridPane.rowIndex="4" GridPane.columnIndex="1" style="-fx-font-size: 14px;"/>
+
+            <!-- Logo más grande y centrado en la derecha -->
+            <VBox spacing="10" alignment="CENTER" GridPane.rowIndex="0" GridPane.columnIndex="2" GridPane.rowSpan="5">
+                <Label text="Logo:" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+                <ImageView fx:id="imgLogo" fitWidth="180" fitHeight="180"/>
+                <Button text="Seleccionar Logo" fx:id="btnSeleccionarLogo"/>
+            </VBox>
+        </GridPane>
+    </center>
+
+    <!-- Botón de actualización centrado abajo -->
+    <bottom>
+        <HBox alignment="CENTER" style="-fx-padding: 20;">
+            <Button text="Actualizar Datos" fx:id="btnActualizar" style="-fx-font-size: 16px; -fx-padding: 10px 25px;"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>

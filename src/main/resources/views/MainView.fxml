@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.facturacion.factu3.controllers.MainController">
+
+    <top>
+        <MenuBar>
+            <menus>
+
+                <!-- 🔹 Nuevo menú "Home" -->
+                <Menu text="Home">
+                    <MenuItem text="Ir a Inicio" onAction="#handleHome"/>
+                    <MenuItem text="Cerrar Sesión" onAction="#handleLogout"/>
+                </Menu>
+
+                <Menu text="Fichas">
+                    <MenuItem text="Clientes" fx:id="menuClientes" onAction="#handleClientes"/>
+                    <MenuItem text="Proveedores" fx:id="menuProveedores" onAction="#handleProveedores"/>
+                    <MenuItem text="Trabajadores" fx:id="menuTrabajadores" onAction="#handleTrabajadores"/>
+                    <MenuItem text="Comerciales" fx:id="menuComerciales" onAction="#handleComerciales"/>
+                    <MenuItem text="Distribuidores" fx:id="menuDistribuidores" onAction="#handleDistribuidores"/>
+                    <MenuItem text="Artículos" fx:id="menuArticulos" onAction="#handleArticulo"/>
+                </Menu>
+
+                <Menu text="Facturas">
+                    <MenuItem text="Crear Factura"/>
+                    <MenuItem text="Ver Factura"/>
+                </Menu>
+
+                <Menu text="Rectificativas">
+                    <MenuItem text="Crear Rectificativa"/>
+                    <MenuItem text="Ver Rectificativa"/>
+                </Menu>
+
+                <Menu text="Listados">
+                    <MenuItem text="Listar información"/>
+                </Menu>
+
+                <Menu text="Configuración">
+                    <MenuItem text="Datos de la empresa" fx:id="menuEmpresa" onAction="#handleEmpresa"/>
+                </Menu>
+
+                <Menu text="Ayuda">
+                    <MenuItem text="Manual de usuario"/>
+                    <MenuItem text="Acerca de"/>
+                </Menu>
+
+            </menus>
+        </MenuBar>
+    </top>
+
+    <center>
+        <StackPane fx:id="mainContent"/>
+    </center>
+
+    <bottom>
+        <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-padding: 5;">
+            <Label fx:id="statusLabel" text="Estado de conexión" />
+            <Label fx:id="dateTimeLabel" text="Fecha y Hora" />
+        </HBox>
+    </bottom>
+
+</BorderPane>

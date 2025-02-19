@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.facturacion.factu3.controllers.ArticulosController">
+
+    <children>
+        <VBox spacing="15" AnchorPane.topAnchor="10.0" AnchorPane.bottomAnchor="10.0"
+              AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+
+            <GridPane hgap="10" vgap="10">
+                <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="150"/>
+                    <ColumnConstraints hgrow="ALWAYS" minWidth="250"/>
+                </columnConstraints>
+
+                <Label text="Código Artículo:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtCodigoArticulo" GridPane.rowIndex="0" GridPane.columnIndex="1" editable="false"/>
+
+                <Label text="Código Barras:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtCodigoBarras" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                <Label text="Descripción:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtDescripcion" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                <Label text="Familia:" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+                <TextField fx:id="txtFamilia" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+
+                <Label text="Coste:" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
+                <TextField fx:id="txtCoste" GridPane.rowIndex="1" GridPane.columnIndex="3"/>
+
+                <Label text="Margen Comercial:" GridPane.rowIndex="2" GridPane.columnIndex="2"/>
+                <TextField fx:id="txtMargen" GridPane.rowIndex="2" GridPane.columnIndex="3"/>
+
+                <Label text="PVP:" GridPane.rowIndex="0" GridPane.columnIndex="4"/>
+                <TextField fx:id="txtPvp" GridPane.rowIndex="0" GridPane.columnIndex="5"/>
+
+                <Label text="Proveedor:" GridPane.rowIndex="1" GridPane.columnIndex="4"/>
+                <ComboBox fx:id="cmbProveedor" GridPane.rowIndex="1" GridPane.columnIndex="5"/>
+
+                <Label text="Stock:" GridPane.rowIndex="2" GridPane.columnIndex="4"/>
+                <TextField fx:id="txtStock" GridPane.rowIndex="2" GridPane.columnIndex="5"/>
+            </GridPane>
+
+            <Label text="Observaciones:"/>
+            <TextArea fx:id="txtObservaciones" prefHeight="80"/>
+
+            <Button text="Guardar Artículo" fx:id="btnGuardar" onAction="#guardarArticulo" maxWidth="200"/>
+
+            <TableView fx:id="tblArticulos">
+                <columns>
+                    <TableColumn text="ID" fx:id="colId" prefWidth="50"/>
+                    <TableColumn text="Código Artículo" fx:id="colCodigoArticulo" prefWidth="120"/>
+                    <TableColumn text="Código Barras" fx:id="colCodigoBarras" prefWidth="150"/>
+                    <TableColumn text="Descripción" fx:id="colDescripcion" prefWidth="180"/>
+                    <TableColumn text="Familia" fx:id="colFamilia" prefWidth="80"/>
+                    <TableColumn text="Coste" fx:id="colCoste" prefWidth="80"/>
+                    <TableColumn text="Margen" fx:id="colMargen" prefWidth="80"/>
+                    <TableColumn text="PVP" fx:id="colPvp" prefWidth="80"/>
+                    <TableColumn text="Proveedor" fx:id="colProveedor" prefWidth="120"/>
+                    <TableColumn text="Stock" fx:id="colStock" prefWidth="80"/>
+                    <TableColumn text="Observaciones" fx:id="colObservaciones" prefWidth="200"/>
+                </columns>
+            </TableView>
+
+        </VBox>
+    </children>
+</AnchorPane>

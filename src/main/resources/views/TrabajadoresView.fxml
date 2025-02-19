@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.facturacion.factu3.controllers.TrabajadoresController">
+
+    <children>
+        <VBox spacing="10" AnchorPane.topAnchor="10.0" AnchorPane.bottomAnchor="10.0"
+              AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+
+            <GridPane hgap="10" vgap="10">
+                <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="100"/>
+                    <ColumnConstraints hgrow="ALWAYS" minWidth="200"/>
+                </columnConstraints>
+
+                <Label text="Nombre:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtNombre" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                <Label text="Dirección:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtDireccion" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                <Label text="Teléfono:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtTelefono" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                <Label text="Email:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtEmail" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                <Label text="Puesto:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtPuesto" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+                <Label text="Salario:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtSalario" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+                <Label text="Observaciones:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+                <TextArea fx:id="txtObservaciones" GridPane.rowIndex="6" GridPane.columnSpan="2"/>
+            </GridPane>
+
+            <Button text="Guardar Trabajador" fx:id="btnGuardar" onAction="#guardarTrabajador"/>
+
+            <TableView fx:id="tblTrabajadores">
+                <columns>
+                    <TableColumn text="ID" fx:id="colId"/>
+                    <TableColumn text="Nombre" fx:id="colNombre"/>
+                    <TableColumn text="Dirección" fx:id="colDireccion"/>
+                    <TableColumn text="Teléfono" fx:id="colTelefono"/>
+                    <TableColumn text="Email" fx:id="colEmail"/>
+                    <TableColumn text="Puesto" fx:id="colPuesto"/>
+                    <TableColumn text="Salario" fx:id="colSalario"/>
+                    <TableColumn text="Observaciones" fx:id="colObservaciones"/>
+                </columns>
+            </TableView>
+
+        </VBox>
+    </children>
+</AnchorPane>

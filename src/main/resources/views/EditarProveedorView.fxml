@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.facturacion.factu3.controllers.EditarProveedorController">
+
+    <children>
+        <VBox spacing="10" AnchorPane.topAnchor="10.0" AnchorPane.bottomAnchor="10.0"
+              AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+
+            <GridPane hgap="10" vgap="10">
+                <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="100"/>
+                    <ColumnConstraints hgrow="ALWAYS" minWidth="200"/>
+                </columnConstraints>
+
+                <Label text="Nombre:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtNombre" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                <Label text="Dirección:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtDireccion" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                <Label text="Teléfono:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtTelefono" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                <Label text="Email:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtEmail" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                <Label text="CIF:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtCIF" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+                <Label text="Observaciones:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                <TextArea fx:id="txtObservaciones" GridPane.rowIndex="6" GridPane.columnSpan="2"/>
+            </GridPane>
+
+            <HBox spacing="10">
+                <Button text="Guardar Cambios" fx:id="btnGuardar" onAction="#guardarCambios"/>
+                <Button text="Eliminar" fx:id="btnEliminar" onAction="#eliminarProveedor"/>
+            </HBox>
+
+        </VBox>
+    </children>
+</AnchorPane>
