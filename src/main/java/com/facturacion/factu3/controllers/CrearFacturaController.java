@@ -9,6 +9,7 @@ import com.facturacion.factu3.utils.GenerarFacturaPDF;
 import com.facturacion.factu3.database.CrearFacturaDAO;
 import com.facturacion.factu3.models.ClienteDAO;
 import com.facturacion.factu3.models.ArticuloDAO;
+import com.facturacion.factu3.utils.ImprimirFactura;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
@@ -17,6 +18,8 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -37,6 +40,9 @@ public class CrearFacturaController {
 
     @FXML
     private TextField txtNumeroFactura;
+    @FXML
+    private Button btnImprimirFactura; // Declarar el botón
+
     @FXML private ComboBox<Cliente> cmbCliente;
     @FXML private ComboBox<String> cmbFormaPago;
     @FXML private ComboBox<Articulo> cmbArticulos;
@@ -51,6 +57,15 @@ public class CrearFacturaController {
     @FXML private Button btnGuardarFactura;
     @FXML private Button btnGenerarPDF;
     @FXML private Button btnCancelar;
+    @FXML private DatePicker dpFechaCobro;
+    @FXML private TextArea txtObservaciones;
+    @FXML private TableColumn<LineaFactura, Double> colCantidad;
+    @FXML private TableColumn<LineaFactura, Double> colIVA;
+    @FXML private TableColumn<LineaFactura, String> colFormaPago;
+    @FXML private TableColumn<LineaFactura, String> colFechaCobro;
+    @FXML private TableColumn<LineaFactura, String> colObservaciones;
+
+
 
     public CrearFacturaController() {
         this.lineasFactura = FXCollections.observableArrayList();
@@ -90,50 +105,23 @@ public class CrearFacturaController {
             lineasFactura = FXCollections.observableArrayList();
             tablaLineasFactura.setItems(lineasFactura);
 
-            // Configurar las columnas de la tabla con formateo en €
-            colDescripcion.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDescripcion()));
+            // Configurar las columnas de la tabla
+            colCantidad.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper<>(cellData.getValue().getCantidad()));
+            colDescripcion.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getDescripcion()));
+            colPrecio.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper<>(cellData.getValue().getPrecioUnitario()));
+            colIVA.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper<>(cellData.getValue().getIva()));
+            colTotal.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper<>(cellData.getValue().getTotal()));
 
-            colTotal.setCellValueFactory(cellData ->
-                    new SimpleDoubleProperty(cellData.getValue().getTotal()).asObject());
-            colTotal.setCellFactory(column -> new TextFieldTableCell<>(new StringConverter<Double>() {
-                @Override
-                public String toString(Double value) {
-                    return value != null ? formatearEuros(value) : "";
-                }
+            // Las siguientes columnas toman el valor directamente de los inputs del usuario
+            colFormaPago.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cmbFormaPago.getSelectionModel().getSelectedItem()));
+            colFechaCobro.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(dpFechaCobro.getValue() != null ? dpFechaCobro.getValue().toString() : "No cobrado"));
+            colObservaciones.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(txtObservaciones.getText().trim().isEmpty() ? "Sin observaciones" : txtObservaciones.getText()));
 
-                @Override
-                public Double fromString(String string) {
-                    try {
-                        return NumberFormat.getCurrencyInstance(Locale.FRANCE).parse(string).doubleValue();
-                    } catch (Exception e) {
-                        return 0.0;
-                    }
-                }
-            }));
-
-            colPrecio.setCellValueFactory(cellData ->
-                    new SimpleDoubleProperty(cellData.getValue().getPrecioUnitario()).asObject());
-            colPrecio.setCellFactory(column -> new TextFieldTableCell<>(new StringConverter<Double>() {
-                @Override
-                public String toString(Double value) {
-                    return value != null ? formatearEuros(value) : "";
-                }
-
-                @Override
-                public Double fromString(String string) {
-                    try {
-                        return NumberFormat.getCurrencyInstance(Locale.FRANCE).parse(string).doubleValue();
-                    } catch (Exception e) {
-                        return 0.0;
-                    }
-                }
-            }));
-
-            // Agregar valores predeterminados a los ComboBox
+            // Configurar valores predeterminados en ComboBox
             cmbIVA.setItems(FXCollections.observableArrayList(4.0, 10.0, 21.0));
             cmbFormaPago.setItems(FXCollections.observableArrayList("Efectivo", "Tarjeta", "Transferencia"));
 
-            // Configurar correctamente la conversión de objetos a String en los ComboBox
+            // Configurar conversores de texto en los ComboBox
             cmbCliente.setConverter(new StringConverter<Cliente>() {
                 @Override
                 public String toString(Cliente cliente) {
@@ -159,6 +147,7 @@ public class CrearFacturaController {
             });
         });
     }
+
 
     // Método para formatear valores en euros
     private String formatearEuros(double cantidad) {
@@ -249,13 +238,22 @@ public class CrearFacturaController {
             double precioUnitario = articuloSeleccionado.getPvp();
             double total = cantidad * precioUnitario * (1 + iva / 100);
 
+            String formaPago = cmbFormaPago.getSelectionModel().getSelectedItem();
+            String fechaCobro = dpFechaCobro.getValue() != null ? dpFechaCobro.getValue().toString() : "No cobrado";
+            String observaciones = txtObservaciones.getText().trim().isEmpty() ? "Sin observaciones" : txtObservaciones.getText();
+
             LineaFactura nuevaLinea = new LineaFactura(0, articuloSeleccionado.getId(), articuloSeleccionado.getDescripcion(), cantidad, precioUnitario, iva, total);
             lineasFactura.add(nuevaLinea);
+
+            // Actualizar tabla
+            tablaLineasFactura.refresh();
             actualizarTotales();
         } catch (NumberFormatException e) {
             mostrarAlerta("Error", "La cantidad debe ser un número válido.", Alert.AlertType.ERROR);
         }
     }
+
+
 
 
     @FXML
@@ -303,36 +301,45 @@ public class CrearFacturaController {
         try {
             int numeroFactura = Integer.parseInt(txtNumeroFactura.getText());
             Cliente clienteSeleccionado = cmbCliente.getSelectionModel().getSelectedItem();
+            int idCliente = clienteSeleccionado != null ? clienteSeleccionado.getId() : 0;
 
-            if (clienteSeleccionado == null) {
-                mostrarAlerta("Error", "Debe seleccionar un cliente antes de generar el PDF.", Alert.AlertType.ERROR);
-                return;
-            }
+            // Obtener datos adicionales
+            String formaPago = cmbFormaPago.getSelectionModel().getSelectedItem();
+            String fechaCobro = dpFechaCobro.getValue() != null ? dpFechaCobro.getValue().toString() : "No Cobrado";
+            String observaciones = txtObservaciones.getText();
 
+            // Crear factura con datos básicos
             Factura factura = new Factura(
-                    numeroFactura,
-                    new Date(),
-                    clienteSeleccionado.getId(),
-                    calcularBaseImponible(lineasFactura),
-                    calcularIVA(lineasFactura),
+                    numeroFactura, new Date(), idCliente,
+                    calcularBaseImponible(lineasFactura), calcularIVA(lineasFactura),
                     calcularBaseImponible(lineasFactura) + calcularIVA(lineasFactura),
                     false, 1, null
             );
             factura.setLineasFactura(lineasFactura);
 
-            // Ruta donde se guardará el PDF (en la carpeta Descargas del usuario)
+            // Obtener la ruta de descargas
             String userHome = System.getProperty("user.home");
-            String rutaPDF = userHome + File.separator + "Downloads" + File.separator + "factura_" + numeroFactura + ".pdf";
+            String rutaPDF = userHome + "/Downloads/factura_" + numeroFactura + ".pdf";
 
-            // Generar el PDF pasando la factura y el cliente
-            GenerarFacturaPDF.generarFacturaPDF(factura, clienteSeleccionado);
+            // Llamar a la función con todos los parámetros necesarios
+            GenerarFacturaPDF.generarFacturaPDF(factura, clienteSeleccionado, formaPago, fechaCobro, observaciones);
 
             System.out.println("Factura generada en PDF correctamente: " + rutaPDF);
         } catch (NumberFormatException e) {
-            mostrarAlerta("Error", "Número de factura no válido.", Alert.AlertType.ERROR);
             System.err.println("Error al generar el PDF: " + e.getMessage());
         }
     }
+    @FXML
+    private void imprimirFactura() {
+        try {
+            Stage stage = (Stage) btnGuardarFactura.getScene().getWindow(); // Usa otro botón de referencia
+            ImprimirFactura.imprimirPDF(stage);
+        } catch (Exception e) {
+            mostrarAlerta("Error", "No se pudo imprimir la factura.", Alert.AlertType.ERROR);
+            System.err.println("Error al imprimir la factura: " + e.getMessage());
+        }
+    }
+
 
 
     @FXML
@@ -343,21 +350,29 @@ public class CrearFacturaController {
             int idCliente = clienteSeleccionado != null ? clienteSeleccionado.getId() : 0;
             int formaPago = cmbFormaPago.getSelectionModel().getSelectedIndex() + 1;
 
-            // 🟢 🔄 Obtener el IVA desde el ComboBox
             double ivaSeleccionado = cmbIVA.getSelectionModel().getSelectedItem();
+
+            // Obtener la fecha de cobro (si se seleccionó)
+            java.sql.Date fechaCobro = dpFechaCobro.getValue() != null ?
+                    java.sql.Date.valueOf(dpFechaCobro.getValue()) : null;
+
+            // Obtener observaciones directamente desde el campo de texto
+            String observaciones = txtObservaciones.getText().trim().isEmpty() ? null : txtObservaciones.getText();
 
             Factura factura = new Factura(numeroFactura, new Date(), idCliente,
                     calcularBaseImponible(lineasFactura),
-                    ivaSeleccionado, // 🟢 Se pasa el porcentaje, no el monto calculado
+                    ivaSeleccionado,
                     calcularBaseImponible(lineasFactura) * (1 + ivaSeleccionado / 100),
-                    false, formaPago, null);
+                    false, formaPago, fechaCobro);
             factura.setLineasFactura(lineasFactura);
 
-            facturaDAO.guardarFactura(factura);
+            // Pasamos el valor de observaciones directamente al DAO
+            facturaDAO.guardarFactura(factura, observaciones);
             System.out.println("Factura guardada con éxito.");
         } catch (SQLException | NumberFormatException e) {
             System.err.println("Error al guardar la factura: " + e.getMessage());
         }
     }
+
 
 }

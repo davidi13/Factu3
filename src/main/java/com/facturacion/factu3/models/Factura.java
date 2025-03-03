@@ -60,7 +60,7 @@ public class Factura {
     public int getFormaPago() { return formaPago; }
     public void setFormaPago(int formaPago) { this.formaPago = formaPago; }
 
-    public Date getFechaCobro() { return fechaCobro; }
+    public java.sql.Date getFechaCobro() { return (java.sql.Date) fechaCobro; }
     public void setFechaCobro(Date fechaCobro) { this.fechaCobro = fechaCobro; }
 
     public List<LineaFactura> getLineasFactura() { return lineasFactura; }

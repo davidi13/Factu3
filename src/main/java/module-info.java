@@ -12,6 +12,7 @@ module com.facturacion.factu3 {
     requires java.sql;
     requires java.desktop;
     requires itextpdf;
+    requires org.apache.pdfbox;
 
     opens com.facturacion.factu3 to javafx.fxml;
     exports com.facturacion.factu3;

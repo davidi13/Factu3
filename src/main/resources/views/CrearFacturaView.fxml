@@ -18,6 +18,12 @@
 
                 <Label text="Forma de Pago:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
                 <ComboBox fx:id="cmbFormaPago" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                <Label text="Fecha de Cobro:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+                <DatePicker fx:id="dpFechaCobro" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+
+                <Label text="Observaciones:" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+                <TextArea fx:id="txtObservaciones" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
             </GridPane>
 
             <Label text="Añadir Producto:" style="-fx-font-weight: bold;"/>
@@ -37,11 +43,15 @@
             <Label text="Líneas de Factura:" style="-fx-font-weight: bold;"/>
             <TableView fx:id="tablaLineasFactura">
                 <columns>
-                    <TableColumn text="Cantidad" fx:id="colCantidad"/>
+                    <TableColumn fx:id="colCantidad" text="Cantidad" />
                     <TableColumn fx:id="colDescripcion" text="Descripción" />
                     <TableColumn fx:id="colPrecio" text="Precio" />
-                    <TableColumn text="IVA" fx:id="colIVA"/>
-                    <TableColumn fx:id="colTotal" text="Total" />
+                    <TableColumn fx:id="colIVA" text="IVA (%)" />
+                    <TableColumn fx:id="colTotal" text="Total (€)" />
+                    <TableColumn fx:id="colFormaPago" text="Forma de Pago" />
+                    <TableColumn fx:id="colFechaCobro" text="Fecha de Cobro" />
+                    <TableColumn fx:id="colObservaciones" text="Observaciones" />
+
                 </columns>
             </TableView>
 
@@ -64,6 +74,8 @@
                 <Button text="Guardar Factura" fx:id="btnGuardarFactura" onAction="#guardarFactura"/>
                 <Button text="Generar PDF" fx:id="btnGenerarPDF" onAction="#generarPDF"/>
                 <Button text="Cancelar" fx:id="btnCancelar" onAction="#cancelar"/>
+                <Button text="Imprimir Factura" fx:id="btnImprimirFactura" onAction="#imprimirFactura"/>
+
             </HBox>
         </VBox>
     </center>

@@ -13,22 +13,19 @@ public class CrearFacturaDAO {
         this.connection = connection;
     }
 
-    public void guardarFactura(Factura factura) throws SQLException {
-        String sql = "INSERT INTO facturasClientes (numeroFacturaCliente, fechaFacturaCliente, idClienteFactura, baseImponibleFacturaCliente, ivaFacturaCliente, totalFacturaCliente, cobradaFactura, formaCobroFactura, fechaCobroFactura, hashFacturaCiente, qrFacturaCliente) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        PreparedStatement statement = connection.prepareStatement(sql);
+    public void guardarFactura(Factura factura, String observaciones) throws SQLException {
+        String sql = "INSERT INTO facturasClientes (numeroFacturaCliente, fechaFacturaCliente, idClienteFactura, baseImponibleFacturaCliente, ivaFacturaCliente, totalFacturaCliente, cobradaFactura, formaCobroFactura, fechaCobroFactura, hashFacturaCiente, qrFacturaCliente, observacionesFacturaClientes) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
+        PreparedStatement statement = connection.prepareStatement(sql);
         statement.setInt(1, factura.getNumeroFactura());
         statement.setDate(2, new java.sql.Date(factura.getFecha().getTime()));
         statement.setInt(3, factura.getIdCliente());
         statement.setDouble(4, factura.getBaseImponible());
-
-        // 🟢 🔄 Guardamos el porcentaje de IVA en lugar del monto calculado
-        statement.setDouble(5, factura.getIva()); // AHORA ESTÁ CORRECTO ✅
-
+        statement.setDouble(5, factura.getIva()); // Guardamos el porcentaje de IVA
         statement.setDouble(6, factura.getTotal());
         statement.setBoolean(7, factura.isCobrada());
         statement.setInt(8, factura.getFormaPago());
-        statement.setDate(9, factura.getFechaCobro() != null ? new java.sql.Date(factura.getFechaCobro().getTime()) : null);
+        statement.setDate(9, factura.getFechaCobro());
 
         // Generar hash aleatorio como identificador único de factura
         String hashFactura = "HASH_" + factura.getNumeroFactura();
@@ -38,9 +35,14 @@ public class CrearFacturaDAO {
         String qrFactura = "QR_" + factura.getNumeroFactura();
         statement.setString(11, qrFactura);
 
+        // Guardar observaciones (puede ser NULL)
+        statement.setString(12, observaciones);
+
         statement.executeUpdate();
         statement.close();
     }
+
+
 
 
     public int obtenerUltimoNumeroFactura() {
