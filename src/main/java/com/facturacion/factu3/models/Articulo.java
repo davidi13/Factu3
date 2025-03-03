@@ -1,5 +1,9 @@
 package com.facturacion.factu3.models;
 
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+
 public class Articulo {
     private int id;
     private String codigoArticulo;
@@ -29,7 +33,17 @@ public class Articulo {
         this.observaciones = observaciones;
     }
 
+    // Constructor adicional
+    public Articulo(int id, String codigoArticulo, String descripcion, double pvp, double stock) {
+        this.id = id;
+        this.codigoArticulo = codigoArticulo;
+        this.descripcion = descripcion;
+        this.pvp = pvp;
+        this.stock = stock;
+    }
+
     // Getters y Setters
+
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 
@@ -62,4 +76,17 @@ public class Articulo {
 
     public String getObservaciones() { return observaciones; }
     public void setObservaciones(String observaciones) { this.observaciones = observaciones; }
+
+    // Métodos para JavaFX TableView (Propiedades)
+    public SimpleStringProperty nombreProperty() {
+        return new SimpleStringProperty(descripcion);
+    }
+
+    public SimpleDoubleProperty pvpProperty() {
+        return new SimpleDoubleProperty(pvp);
+    }
+
+    public SimpleDoubleProperty stockProperty() {
+        return new SimpleDoubleProperty(stock);
+    }
 }

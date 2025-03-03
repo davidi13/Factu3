@@ -16,7 +16,7 @@ import java.io.IOException;
 public class MainController {
 
     @FXML
-    private MenuItem menuProveedores, menuClientes, menuTrabajadores, menuComerciales, menuDistribuidores;
+    private MenuItem menuProveedores, menuClientes, menuTrabajadores, menuComerciales, menuDistribuidores, menuFacturas;
 
     @FXML
     private StackPane mainContent;
@@ -42,6 +42,7 @@ public class MainController {
         loadView("/views/SplashScreen.fxml");
     }
 
+    // MÉTODOS PARA CARGAR LAS VISTAS
     @FXML
     private void handleClientes() {
         loadView("/views/ClientesView.fxml");
@@ -53,11 +54,12 @@ public class MainController {
         loadView("/views/ProveedoresView.fxml");
     }
 
-     @FXML
+    @FXML
     private void handleTrabajadores() {
         System.out.println("👷 Cargando vista de Trabajadores...");
         loadView("/views/TrabajadoresView.fxml");
     }
+
     @FXML
     private void handleEmpresa() {
         System.out.println("🏢 Cargando vista de Empresa...");
@@ -72,10 +74,9 @@ public class MainController {
 
     @FXML
     private void handleArticulo() {
-        System.out.println("🏢 Cargando vista de Articulo...");
+        System.out.println("🏢 Cargando vista de Artículo...");
         loadView("/views/ArticuloView.fxml");
     }
-
 
     @FXML
     private void handleComerciales() {
@@ -83,35 +84,39 @@ public class MainController {
         loadView("/views/ComercialesView.fxml");
     }
 
-
-    /*
-    @FXML
-    private void handleDistribuidores() {
-        System.out.println("🚚 Cargando vista de Distribuidores...");
-        loadView("/views/DistribuidoresView.fxml");
-    }
-    */
-
     @FXML
     private void handleHome() {
         loadView("/views/SplashScreen.fxml");
     }
 
+    // CARGAR FACTURAS
     @FXML
-    private void handleLogout() {
-        Stage stage = (Stage) mainContent.getScene().getWindow(); // 🔹 Obtener la ventana actual
-        stage.close(); // 🔹 Cerrar la ventana actual
-
-        // 🔹 Volver a mostrar la ventana de login con el tamaño correcto
-        new MainApp().mostrarLogin(new Stage());
+    private void handleCrearFactura() {
+        System.out.println("🧾 Cargando vista de Crear Factura...");
+        loadView("/views/CrearFacturaView.fxml");
     }
 
+    // MÉTODO PARA CARGAR VISTAS
     private void loadView(String fxmlPath) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Pane view = loader.load();
             mainContent.getChildren().setAll(view);
         } catch (IOException e) {
+            System.err.println("⚠ ERROR: No se pudo cargar la vista: " + fxmlPath);
+            e.printStackTrace();
+        }
+    }
+
+    // CERRAR SESIÓN Y VOLVER AL LOGIN
+    @FXML
+    private void handleLogout() {
+        try {
+            Stage stage = (Stage) mainContent.getScene().getWindow();
+            stage.close(); // Cierra la ventana actual
+            new MainApp().mostrarLogin(new Stage()); // Muestra la pantalla de inicio de sesión
+        } catch (Exception e) {
+            System.err.println("⚠ ERROR: No se pudo cerrar la sesión.");
             e.printStackTrace();
         }
     }

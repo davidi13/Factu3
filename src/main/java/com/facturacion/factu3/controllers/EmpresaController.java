@@ -32,38 +32,60 @@ public class EmpresaController {
             txtEmail.setText(empresa.getEmail());
             txtCIF.setText(empresa.getCif());
 
+            // Mostrar la imagen si existe
             if (empresa.getLogo() != null && !empresa.getLogo().isEmpty()) {
-                imgLogo.setImage(new Image("file:" + empresa.getLogo()));
+                imgLogo.setImage(new Image(empresa.getLogo()));
             }
         }
     }
 
+
     @FXML
     private void actualizarEmpresa() {
-        empresa.setNombre(txtNombre.getText());
-        empresa.setDireccion(txtDireccion.getText());
-        empresa.setTelefono(txtTelefono.getText());
-        empresa.setEmail(txtEmail.getText());
-        empresa.setCif(txtCIF.getText());
+        Empresa empresaActualizada = new Empresa(
+                empresa.getId(),
+                txtNombre.getText(),
+                txtDireccion.getText(),
+                txtTelefono.getText(),
+                txtEmail.getText(),
+                txtCIF.getText(),
+                empresa.getLogo()  // O la nueva imagen si se seleccionó una
+        );
 
-        if (EmpresaDAO.actualizarEmpresa(empresa)) {
-            mostrarAlerta("Éxito", "Datos actualizados correctamente.", Alert.AlertType.INFORMATION);
+        boolean resultado = EmpresaDAO.actualizarEmpresa(empresaActualizada);
+
+        if (resultado) {
+            mostrarAlerta("Éxito", "Los datos de la empresa se actualizaron correctamente.", Alert.AlertType.INFORMATION);
         } else {
-            mostrarAlerta("Error", "No se pudieron actualizar los datos.", Alert.AlertType.ERROR);
+            mostrarAlerta("Error", "Hubo un problema al actualizar los datos.", Alert.AlertType.ERROR);
         }
     }
+
 
     @FXML
     private void seleccionarLogo() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Imágenes", "*.png", "*.jpg", "*.jpeg"));
-        File file = fileChooser.showOpenDialog(new Stage());
+        File file = fileChooser.showOpenDialog(null);
 
         if (file != null) {
-            imgLogo.setImage(new Image(file.toURI().toString()));
-            empresa.setLogo(file.getAbsolutePath());
+            String rutaImagen = file.toURI().toString();  // Obtener la ruta en formato URI
+            empresa.setLogo(rutaImagen);  // Actualizar en la empresa actual
+
+            // Actualizar la imagen en la UI
+            imgLogo.setImage(new Image(rutaImagen));
+
+            // Guardar la nueva imagen en la base de datos
+            boolean resultado = EmpresaDAO.actualizarEmpresa(empresa);
+
+            if (resultado) {
+                mostrarAlerta("Éxito", "El logo se ha actualizado correctamente.", Alert.AlertType.INFORMATION);
+            } else {
+                mostrarAlerta("Error", "No se pudo actualizar el logo.", Alert.AlertType.ERROR);
+            }
         }
     }
+
 
     private void mostrarAlerta(String titulo, String mensaje, Alert.AlertType tipo) {
         Alert alerta = new Alert(tipo);

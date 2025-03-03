@@ -40,6 +40,12 @@ public class Cliente {
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 
+    @Override
+    public String toString() {
+        return nombreCliente;
+    }
+
+
     public String getNombreCliente() { return nombreCliente; }
     public void setNombreCliente(String nombreCliente) { this.nombreCliente = nombreCliente; }
 

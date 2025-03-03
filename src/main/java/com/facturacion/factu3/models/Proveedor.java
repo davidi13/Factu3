@@ -19,6 +19,7 @@ public class Proveedor {
         this.observaciones = observaciones;
     }
 
+
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 
@@ -42,6 +43,7 @@ public class Proveedor {
 
     @Override
     public String toString() {
-        return nombre; // ✅ Se mostrará el nombre en el ComboBox
+        return nombre;
     }
+
 }

@@ -26,8 +26,8 @@
                 </Menu>
 
                 <Menu text="Facturas">
-                    <MenuItem text="Crear Factura"/>
-                    <MenuItem text="Ver Factura"/>
+                    <MenuItem text="Crear Factura" onAction="#handleCrearFactura"/>
+                    <MenuItem text="Ver Factura" />
                 </Menu>
 
                 <Menu text="Rectificativas">

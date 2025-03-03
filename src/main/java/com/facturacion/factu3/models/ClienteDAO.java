@@ -147,4 +147,37 @@ public class ClienteDAO {
 
         return listaClientes;
     }
+
+    public static Cliente obtenerClientePorId(int id) {
+        String sql = "SELECT * FROM clientes WHERE id = ?";
+        try (Connection conn = DatabaseConnection.obtenerConexion();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return new Cliente(
+                        rs.getInt("id"),
+                        rs.getString("nombreCliente"),
+                        rs.getString("direccionCliente"),
+                        rs.getString("cpCliente"),
+                        rs.getString("poblacionCliente"),
+                        rs.getString("provinciaCliente"),
+                        rs.getString("paisCliente"),
+                        rs.getString("cifCliente"),
+                        rs.getString("telCliente"),
+                        rs.getString("emailCliente"),
+                        rs.getString("ibanCliente"),
+                        rs.getDouble("riesgoCliente"),
+                        rs.getDouble("descuentoCliente"),
+                        rs.getString("observacionesCliente")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

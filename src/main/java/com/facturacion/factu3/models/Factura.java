@@ -5,56 +5,64 @@ import java.util.List;
 
 public class Factura {
     private int id;
-    private String numeroFactura;
+    private int numeroFactura;
     private Date fecha;
-    private Empresa empresa;
-    private Cliente cliente;
-    private Proveedor proveedor;
-    private List<LineaFactura> lineasFactura;
-    private double total;
+    private int idCliente;
+    private double baseImponible;
     private double iva;
-    private double totalConIva;
+    private double total;
+    private boolean cobrada;
+    private int formaPago;
+    private Date fechaCobro;
+    private List<LineaFactura> lineasFactura;
 
-    public Factura(int id, String numeroFactura, Date fecha, Empresa empresa, Cliente cliente, Proveedor proveedor, List<LineaFactura> lineasFactura, double total, double iva) {
-        this.id = id;
+    // Constructor vacío
+    public Factura() {}
+
+    // Constructor con parámetros
+    public Factura(int numeroFactura, Date fecha, int idCliente, double baseImponible, double iva, double total, boolean cobrada, int formaPago, Date fechaCobro) {
         this.numeroFactura = numeroFactura;
         this.fecha = fecha;
-        this.empresa = empresa;
-        this.cliente = cliente;
-        this.proveedor = proveedor;
-        this.lineasFactura = lineasFactura;
-        this.total = total;
+        this.idCliente = idCliente;
+        this.baseImponible = baseImponible;
         this.iva = iva;
-        this.totalConIva = total + (total * (iva / 100));
+        this.total = total;
+        this.cobrada = cobrada;
+        this.formaPago = formaPago;
+        this.fechaCobro = fechaCobro;
     }
 
     // Getters y Setters
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 
-    public String getNumeroFactura() { return numeroFactura; }
-    public void setNumeroFactura(String numeroFactura) { this.numeroFactura = numeroFactura; }
+    public int getNumeroFactura() { return numeroFactura; }
+    public void setNumeroFactura(int numeroFactura) { this.numeroFactura = numeroFactura; }
 
     public Date getFecha() { return fecha; }
     public void setFecha(Date fecha) { this.fecha = fecha; }
 
-    public Empresa getEmpresa() { return empresa; }
-    public void setEmpresa(Empresa empresa) { this.empresa = empresa; }
+    public int getIdCliente() { return idCliente; }
+    public void setIdCliente(int idCliente) { this.idCliente = idCliente; }
 
-    public Cliente getCliente() { return cliente; }
-    public void setCliente(Cliente cliente) { this.cliente = cliente; }
-
-    public Proveedor getProveedor() { return proveedor; }
-    public void setProveedor(Proveedor proveedor) { this.proveedor = proveedor; }
-
-    public List<LineaFactura> getLineasFactura() { return lineasFactura; }
-    public void setLineasFactura(List<LineaFactura> lineasFactura) { this.lineasFactura = lineasFactura; }
-
-    public double getTotal() { return total; }
-    public void setTotal(double total) { this.total = total; }
+    public double getBaseImponible() { return baseImponible; }
+    public void setBaseImponible(double baseImponible) { this.baseImponible = baseImponible; }
 
     public double getIva() { return iva; }
     public void setIva(double iva) { this.iva = iva; }
 
-    public double getTotalConIva() { return totalConIva; }
+    public double getTotal() { return total; }
+    public void setTotal(double total) { this.total = total; }
+
+    public boolean isCobrada() { return cobrada; }
+    public void setCobrada(boolean cobrada) { this.cobrada = cobrada; }
+
+    public int getFormaPago() { return formaPago; }
+    public void setFormaPago(int formaPago) { this.formaPago = formaPago; }
+
+    public Date getFechaCobro() { return fechaCobro; }
+    public void setFechaCobro(Date fechaCobro) { this.fechaCobro = fechaCobro; }
+
+    public List<LineaFactura> getLineasFactura() { return lineasFactura; }
+    public void setLineasFactura(List<LineaFactura> lineasFactura) { this.lineasFactura = lineasFactura; }
 }

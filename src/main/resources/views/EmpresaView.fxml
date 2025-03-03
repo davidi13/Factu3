@@ -35,7 +35,7 @@
             <VBox spacing="10" alignment="CENTER" GridPane.rowIndex="0" GridPane.columnIndex="2" GridPane.rowSpan="5">
                 <Label text="Logo:" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
                 <ImageView fx:id="imgLogo" fitWidth="180" fitHeight="180"/>
-                <Button text="Seleccionar Logo" fx:id="btnSeleccionarLogo"/>
+                <Button text="Seleccionar Logo" fx:id="btnSeleccionarLogo" onAction="#seleccionarLogo"/>
             </VBox>
         </GridPane>
     </center>
@@ -43,7 +43,8 @@
     <!-- Botón de actualización centrado abajo -->
     <bottom>
         <HBox alignment="CENTER" style="-fx-padding: 20;">
-            <Button text="Actualizar Datos" fx:id="btnActualizar" style="-fx-font-size: 16px; -fx-padding: 10px 25px;"/>
+            <Button text="Actualizar Datos" fx:id="btnActualizar" onAction="#actualizarEmpresa"
+                    style="-fx-font-size: 16px; -fx-padding: 10px 25px;"/>
         </HBox>
     </bottom>
 

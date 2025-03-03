@@ -11,9 +11,12 @@ module com.facturacion.factu3 {
     requires com.almasb.fxgl.all;
     requires java.sql;
     requires java.desktop;
+    requires itextpdf;
 
     opens com.facturacion.factu3 to javafx.fxml;
     exports com.facturacion.factu3;
     exports com.facturacion.factu3.controllers;
     opens com.facturacion.factu3.controllers to javafx.fxml;
+    exports com.facturacion.factu3.utils;
+    opens com.facturacion.factu3.utils to javafx.fxml;
 }

@@ -1,33 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/17"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.facturacion.factu3.controllers.FacturasController">
-    <children>
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.facturacion.factu3.controllers.CrearFacturaController">
+    <top>
+        <Label text="Crear Factura" style="-fx-font-size: 18px; -fx-font-weight: bold;" BorderPane.alignment="CENTER"/>
+    </top>
+    <center>
         <VBox spacing="10">
             <GridPane hgap="10" vgap="10">
-                <Label text="Empresa:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                <ComboBox fx:id="cmbEmpresa" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                <Label text="Número de Factura:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtNumeroFactura" GridPane.rowIndex="0" GridPane.columnIndex="1" editable="false"/>
 
                 <Label text="Cliente:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
                 <ComboBox fx:id="cmbCliente" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
 
-                <Label text="Proveedor:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-                <ComboBox fx:id="cmbProveedor" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
-
-                <Label text="Fecha:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-                <DatePicker fx:id="dpFecha" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
-
-                <Label text="Total:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-                <TextField fx:id="txtTotal" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
-
-                <Label text="IVA:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
-                <TextField fx:id="txtIva" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+                <Label text="Forma de Pago:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <ComboBox fx:id="cmbFormaPago" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
             </GridPane>
 
-            <Button text="Guardar Factura" fx:id="btnGuardar" onAction="#guardarFactura"/>
+            <Label text="Añadir Producto:" style="-fx-font-weight: bold;"/>
+            <GridPane hgap="10" vgap="10">
+                <Label text="Artículo:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <ComboBox fx:id="cmbArticulos" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                <Label text="Cantidad:" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+                <TextField fx:id="txtCantidad" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+
+                <Label text="IVA:" GridPane.rowIndex="0" GridPane.columnIndex="4"/>
+                <ComboBox fx:id="cmbIVA" GridPane.rowIndex="0" GridPane.columnIndex="5"/>
+
+                <Button text="Añadir Línea" fx:id="btnAgregarLinea" onAction="#agregarLinea" GridPane.rowIndex="0" GridPane.columnIndex="6"/>
+            </GridPane>
+
+            <Label text="Líneas de Factura:" style="-fx-font-weight: bold;"/>
+            <TableView fx:id="tablaLineasFactura">
+                <columns>
+                    <TableColumn text="Cantidad" fx:id="colCantidad"/>
+                    <TableColumn fx:id="colDescripcion" text="Descripción" />
+                    <TableColumn fx:id="colPrecio" text="Precio" />
+                    <TableColumn text="IVA" fx:id="colIVA"/>
+                    <TableColumn fx:id="colTotal" text="Total" />
+                </columns>
+            </TableView>
+
+            <HBox spacing="10">
+                <Button text="Eliminar Línea" fx:id="btnEliminarLinea" onAction="#eliminarLinea"/>
+            </HBox>
+
+            <GridPane hgap="10" vgap="10">
+                <Label text="Base Imponible:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <Label fx:id="lblBaseImponible" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                <Label text="IVA:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <Label fx:id="lblIVA" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                <Label text="Total:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <Label fx:id="lblTotal" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+            </GridPane>
+
+            <HBox spacing="10" alignment="CENTER">
+                <Button text="Guardar Factura" fx:id="btnGuardarFactura" onAction="#guardarFactura"/>
+                <Button text="Generar PDF" fx:id="btnGenerarPDF" onAction="#generarPDF"/>
+                <Button text="Cancelar" fx:id="btnCancelar" onAction="#cancelar"/>
+            </HBox>
         </VBox>
-    </children>
-</AnchorPane>
+    </center>
+</BorderPane>

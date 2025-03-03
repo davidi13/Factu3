@@ -37,6 +37,30 @@ public class ArticuloDAO {
         return lista;
     }
 
+    public static Articulo obtenerArticuloPorId(int id) {
+        String sql = "SELECT * FROM articulos WHERE id = ?";
+        try (Connection conn = DatabaseConnection.obtenerConexion();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return new Articulo(
+                        rs.getInt("id"),
+                        rs.getString("codigoArticulo"),
+                        rs.getString("descripcionArticulo"),
+                        rs.getDouble("pvpArticulo"),
+                        rs.getInt("stockArticulo")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
     public static boolean agregarArticulo(Articulo articulo) {
         String query = "INSERT INTO articulos (codigoArticulo, codigoBarrasArticulo, descripcionArticulo, familiaArticulo, " +
                 "costeArticulo, margenComercialArticulo, pvpArticulo, proveedorArticulo, stockArticulo, observacionesArticulo) " +
