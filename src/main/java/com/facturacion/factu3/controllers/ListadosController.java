@@ -108,12 +108,6 @@ public class ListadosController {
     }
 
 
-    @FXML
-    private void cerrarVentana() {
-        Stage stage = (Stage) cmbCategoria.getScene().getWindow();
-        stage.close();
-    }
-
     private void mostrarAlerta(String titulo, String mensaje, Alert.AlertType tipo) {
         Alert alerta = new Alert(tipo);
         alerta.setTitle(titulo);

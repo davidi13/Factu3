@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="10" alignment="CENTER" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.facturacion.factu3.controllers.RectificativasController">
+
+    <Label text="Rectificativas" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+    <Label text="Selecciona una Factura para Rectificar"/>
+    <ComboBox fx:id="comboFacturas"/>
+
+    <TableView fx:id="tablaFacturas">
+        <columns>
+            <TableColumn fx:id="colNumeroFactura" text="Nº Factura"/>
+            <TableColumn fx:id="colFecha" text="Fecha"/>
+            <TableColumn fx:id="colCliente" text="Cliente"/>
+            <TableColumn fx:id="colBaseImponible" text="Base Imponible"/>
+            <TableColumn fx:id="colIVA" text="IVA"/>
+            <TableColumn fx:id="colTotal" text="Total"/>
+            <TableColumn fx:id="colFormaPago" text="Forma de Pago"/>
+            <TableColumn fx:id="colFechaCobro" text="Fecha de Cobro"/>
+        </columns>
+    </TableView>
+
+    <Button fx:id="btnRectificar" text="Rectificar"/>
+
+</VBox>

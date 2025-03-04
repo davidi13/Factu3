@@ -131,7 +131,12 @@ public class MainController {
 
     @FXML
     private void handleVerFactura() {
-        System.out.println("📊 Cargando vista de Listados...");
+        System.out.println("📊 Cargando vista de Facturas...");
         loadView("/views/VerFacturaView.fxml");
+    }
+
+    public void handleCrearRectificativa(ActionEvent actionEvent) {
+        System.out.println("📊 Cargando vista de Rectificativas...");
+        loadView("/views/RectificativasView.fxml");
     }
 }

@@ -31,7 +31,7 @@
                 </Menu>
 
                 <Menu text="Rectificativas">
-                    <MenuItem text="Crear Rectificativa"/>
+                    <MenuItem text="Crear Rectificativa" onAction="#handleCrearRectificativa"/>
                     <MenuItem text="Ver Rectificativa"/>
                 </Menu>
 
