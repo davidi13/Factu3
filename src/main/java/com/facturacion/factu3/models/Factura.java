@@ -15,6 +15,7 @@ public class Factura {
     private int formaPago;
     private Date fechaCobro;
     private List<LineaFactura> lineasFactura;
+    private String nombreCliente;
 
     // Constructor vacío
     public Factura() {}
@@ -30,6 +31,8 @@ public class Factura {
         this.cobrada = cobrada;
         this.formaPago = formaPago;
         this.fechaCobro = fechaCobro;
+
+
     }
 
     // Getters y Setters
@@ -47,7 +50,13 @@ public class Factura {
 
     public double getBaseImponible() { return baseImponible; }
     public void setBaseImponible(double baseImponible) { this.baseImponible = baseImponible; }
+    public String getNombreCliente() {
+        return nombreCliente;
+    }
 
+    public void setNombreCliente(String nombreCliente) {
+        this.nombreCliente = nombreCliente;
+    }
     public double getIva() { return iva; }
     public void setIva(double iva) { this.iva = iva; }
 

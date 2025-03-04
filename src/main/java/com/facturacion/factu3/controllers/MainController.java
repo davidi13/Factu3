@@ -129,4 +129,9 @@ public class MainController {
         loadView("/views/ListadosView.fxml");
     }
 
+    @FXML
+    private void handleVerFactura() {
+        System.out.println("📊 Cargando vista de Listados...");
+        loadView("/views/VerFacturaView.fxml");
+    }
 }
