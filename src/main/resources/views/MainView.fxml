@@ -45,6 +45,8 @@
 
                 <Menu text="Ayuda">
                     <MenuItem fx:id="menuManualUsuario" text="Manual de usuario" onAction="#abrirManualUsuario"/>
+                    <MenuItem fx:id="AcercaDe" text="Acerca de" onAction="#abrirAcercaDe"/>
+
                 </Menu>
 
 

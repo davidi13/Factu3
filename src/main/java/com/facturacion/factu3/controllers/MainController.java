@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
@@ -169,6 +170,22 @@ public class MainController {
         } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
             System.err.println("❌ Error al intentar abrir el manual de usuario.");
+        }
+    }
+
+    @FXML
+    private void abrirAcercaDe() {
+        String url = "https://github.com/davidi13/Factu3/blob/master/README.md";
+
+        try {
+            if (Desktop.isDesktopSupported()) {
+                Desktop.getDesktop().browse(new URI(url));
+            } else {
+                System.err.println("❌ No se puede abrir el navegador en este sistema.");
+            }
+        } catch (IOException | URISyntaxException e) {
+            e.printStackTrace();
+            System.err.println("❌ Error al abrir la página web.");
         }
     }
 }
