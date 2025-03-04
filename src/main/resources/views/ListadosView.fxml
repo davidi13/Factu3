@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.facturacion.factu3.controllers.ListadosController">
+
+    <top>
+        <Label text="Generar Listado en PDF" style="-fx-font-size: 18px; -fx-font-weight: bold;" BorderPane.alignment="CENTER"/>
+    </top>
+
+    <center>
+        <VBox spacing="10">
+            <HBox spacing="10">
+                <Label text="Selecciona una categoría:"/>
+                <ComboBox fx:id="cmbCategoria"/>
+                <Button text="Cargar Datos" onAction="#cargarDatos"/>
+            </HBox>
+
+            <TableView fx:id="tablaDatos" prefHeight="400">
+                <columns>
+                    <!-- Las columnas se generarán dinámicamente según la selección -->
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
+
+    <bottom>
+        <HBox spacing="10" alignment="CENTER">
+            <Button text="Exportar a PDF" onAction="#exportarPDF"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>

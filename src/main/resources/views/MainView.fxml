@@ -36,7 +36,7 @@
                 </Menu>
 
                 <Menu text="Listados">
-                    <MenuItem text="Listar información"/>
+                    <MenuItem text="Listar información" onAction="#handleListados" />
                 </Menu>
 
                 <Menu text="Configuración">

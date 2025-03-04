@@ -1,8 +1,10 @@
 package com.facturacion.factu3.controllers;
 
 import com.facturacion.factu3.MainApp;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
@@ -120,4 +122,11 @@ public class MainController {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    private void handleListados() {
+        System.out.println("📊 Cargando vista de Listados...");
+        loadView("/views/ListadosView.fxml");
+    }
+
 }
