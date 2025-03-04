@@ -13,7 +13,11 @@ import javafx.scene.layout.Pane;
 import com.facturacion.factu3.database.DatabaseConnection;
 import javafx.stage.Stage;
 
+import java.awt.*;
+import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 
 public class MainController {
 
@@ -143,5 +147,28 @@ public class MainController {
     public void handleVerRectificativa(ActionEvent actionEvent) {
         System.out.println("📊 Cargando vista de Ver Rectificativas...");
         loadView("/views/VerRectificativasView.fxml");
+    }
+
+    @FXML
+    private void abrirManualUsuario() {
+        try {
+            // Obtener la ruta del archivo dentro de resources
+            URL pdfURL = getClass().getResource("/manual/Manual_Usuario_Factu3.pdf");
+
+            if (pdfURL != null) {
+                File pdfFile = new File(pdfURL.toURI());
+
+                if (Desktop.isDesktopSupported()) {
+                    Desktop.getDesktop().open(pdfFile);
+                } else {
+                    System.err.println("❌ La apertura de archivos no es compatible en este sistema.");
+                }
+            } else {
+                System.err.println("❌ No se encontró el archivo PDF en resources.");
+            }
+        } catch (IOException | URISyntaxException e) {
+            e.printStackTrace();
+            System.err.println("❌ Error al intentar abrir el manual de usuario.");
+        }
     }
 }

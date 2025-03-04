@@ -44,9 +44,9 @@
                 </Menu>
 
                 <Menu text="Ayuda">
-                    <MenuItem text="Manual de usuario"/>
-                    <MenuItem text="Acerca de"/>
+                    <MenuItem fx:id="menuManualUsuario" text="Manual de usuario" onAction="#abrirManualUsuario"/>
                 </Menu>
+
 
             </menus>
         </MenuBar>
