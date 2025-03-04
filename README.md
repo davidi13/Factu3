@@ -26,6 +26,19 @@ Este proyecto permite la **gestión de clientes, facturas y facturas rectificati
 
 ---
 
+## 📌 Base de Datos
+Para que Factu3 funcione correctamente, es necesario crear la base de datos en MySQL.  
+
+📂 **Archivos disponibles** en la carpeta [`database/`](database/):  
+- 🗄 **[`gestion_db.sql`](database/gestion_db.sql)** → Script SQL para crear la base de datos y sus tablas.  
+- 📜 **[`diagrama.pdf`](database/diagrama.pdf)** → Diagrama entidad-relación (ERD) de la base de datos.  
+
+### 🔹 Pasos para configurar la base de datos:
+1. Abre **MySQL Workbench** o cualquier cliente SQL.
+2. Ejecuta el siguiente comando para crear la base de datos:
+   ```sql
+   SOURCE database/gestion_db.sql;
+
 ## **🛠 Instalación y uso**
 1. Clonar el repositorio:
    ```sh
