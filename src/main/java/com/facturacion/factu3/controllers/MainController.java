@@ -136,7 +136,12 @@ public class MainController {
     }
 
     public void handleCrearRectificativa(ActionEvent actionEvent) {
-        System.out.println("📊 Cargando vista de Rectificativas...");
+        System.out.println("📊 Cargando vista de Crear Rectificativas...");
         loadView("/views/RectificativasView.fxml");
+    }
+
+    public void handleVerRectificativa(ActionEvent actionEvent) {
+        System.out.println("📊 Cargando vista de Ver Rectificativas...");
+        loadView("/views/VerRectificativasView.fxml");
     }
 }
