@@ -51,7 +51,6 @@
                     <TableColumn fx:id="colFormaPago" text="Forma de Pago" />
                     <TableColumn fx:id="colFechaCobro" text="Fecha de Cobro" />
                     <TableColumn fx:id="colObservaciones" text="Observaciones" />
-
                 </columns>
             </TableView>
 
@@ -63,11 +62,15 @@
                 <Label text="Base Imponible:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
                 <Label fx:id="lblBaseImponible" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
-                <Label text="IVA:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                <Label fx:id="lblIVA" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                <!-- NUEVA FILA PARA DESCUENTO -->
+                <Label text="Descuento:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <Label fx:id="lblDescuento" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
 
-                <Label text="Total:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-                <Label fx:id="lblTotal" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                <Label text="IVA:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <Label fx:id="lblIVA" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                <Label text="Total:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <Label fx:id="lblTotal" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
             </GridPane>
 
             <HBox spacing="10" alignment="CENTER">
@@ -75,7 +78,6 @@
                 <Button text="Generar PDF" fx:id="btnGenerarPDF" onAction="#generarPDF"/>
                 <Button text="Cancelar" fx:id="btnCancelar" onAction="#cancelar"/>
                 <Button text="Imprimir Factura" fx:id="btnImprimirFactura" onAction="#imprimirFactura"/>
-
             </HBox>
         </VBox>
     </center>

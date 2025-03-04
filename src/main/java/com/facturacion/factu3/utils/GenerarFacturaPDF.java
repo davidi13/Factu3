@@ -52,6 +52,15 @@ public class GenerarFacturaPDF {
             // Espaciado antes de la tabla
             documento.add(new Paragraph("\n"));
 
+            // Calcular el descuento del cliente
+            double descuentoCliente = cliente.getDescuentoCliente(); // Descuento en porcentaje
+            double montoDescuento = (factura.getBaseImponible() * descuentoCliente) / 100;
+            double baseImponibleConDescuento = factura.getBaseImponible() - montoDescuento;
+
+            // Calcular el IVA sobre la base imponible con descuento
+            double iva = factura.getIva();
+            double total = baseImponibleConDescuento + iva;
+
             // Tabla de líneas de factura (más ancha)
             PdfPTable tabla = new PdfPTable(7);
             tabla.setWidthPercentage(100); // Ajustar el ancho de la tabla al 100% de la página
@@ -80,9 +89,10 @@ public class GenerarFacturaPDF {
             documento.add(tabla);
 
             // Totales
-            documento.add(new Paragraph("\nBase Imponible: " + formatearEuros(factura.getBaseImponible())));
-            documento.add(new Paragraph("IVA: " + formatearEuros(factura.getIva())));
-            documento.add(new Paragraph("Total: " + formatearEuros(factura.getTotal())));
+            documento.add(new Paragraph("\nBase Imponible: " + formatearEuros(baseImponibleConDescuento)));
+            documento.add(new Paragraph("Descuento aplicado: -" + formatearEuros(montoDescuento)));
+            documento.add(new Paragraph("IVA: " + formatearEuros(iva)));
+            documento.add(new Paragraph("Total: " + formatearEuros(total)));
 
             documento.close();
             System.out.println("Factura generada con éxito en: " + rutaDestino);

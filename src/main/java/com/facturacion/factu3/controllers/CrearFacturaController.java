@@ -64,6 +64,8 @@ public class CrearFacturaController {
     @FXML private TableColumn<LineaFactura, String> colFormaPago;
     @FXML private TableColumn<LineaFactura, String> colFechaCobro;
     @FXML private TableColumn<LineaFactura, String> colObservaciones;
+    @FXML
+    private Label lblDescuento;
 
 
 
@@ -88,6 +90,9 @@ public class CrearFacturaController {
                 mostrarAlerta("Error", "No se pudo establecer la conexión con la base de datos.", Alert.AlertType.ERROR);
                 return;
             }
+
+            cmbCliente.setOnAction(event -> actualizarDescuento());
+
 
             // Inicializar DAO con la conexión obtenida
             facturaDAO = new CrearFacturaDAO(connection);
@@ -280,21 +285,71 @@ public class CrearFacturaController {
 
     private void actualizarTotales() {
         double baseImponible = calcularBaseImponible(lineasFactura);
-        double iva = calcularIVA(lineasFactura);
-        double total = baseImponible + iva;
+        double descuentoCliente;
 
-        lblBaseImponible.setText(String.format("%.2f", baseImponible));
-        lblIVA.setText(String.format("%.2f", iva));
-        lblTotal.setText(String.format("%.2f", total));
+        // Obtener el descuento del cliente seleccionado
+        Cliente clienteSeleccionado = cmbCliente.getSelectionModel().getSelectedItem();
+        if (clienteSeleccionado != null) {
+            descuentoCliente = clienteSeleccionado.getDescuentoCliente(); // Descuento en porcentaje
+        } else {
+            descuentoCliente = 0.0;
+        }
+
+        // Aplicar el descuento a la base imponible
+        double montoDescuento = (baseImponible * descuentoCliente) / 100;
+        double baseImponibleConDescuento = baseImponible - montoDescuento;
+
+        // Calcular el IVA sobre la base imponible con el descuento aplicado
+        double iva = lineasFactura.stream()
+                .mapToDouble(l -> (l.getCantidad() * l.getPrecioUnitario() - (l.getCantidad() * l.getPrecioUnitario() * descuentoCliente / 100)) * (l.getIva() / 100))
+                .sum();
+
+        // Calcular el total
+        double total = baseImponibleConDescuento + iva;
+
+        // Mostrar los valores en la interfaz
+        lblBaseImponible.setText(String.format("%.2f €", baseImponibleConDescuento));
+        lblDescuento.setText(String.format("-%.2f €", montoDescuento));
+        lblIVA.setText(String.format("%.2f €", iva));
+        lblTotal.setText(String.format("%.2f €", total));
     }
+
+
+
+    @FXML
+    private void actualizarDescuento() {
+        Cliente clienteSeleccionado = cmbCliente.getSelectionModel().getSelectedItem();
+        if (clienteSeleccionado != null) {
+            double descuento = clienteSeleccionado.getDescuentoCliente(); // Suponiendo que el modelo Cliente tiene getDescuento()
+            lblDescuento.setText(String.format("%.2f €", descuento)); // Formatear a euros
+        } else {
+            lblDescuento.setText("0.00 €"); // Valor por defecto si no hay cliente seleccionado
+        }
+    }
+
+
+
 
     private double calcularBaseImponible(List<LineaFactura> lineasFactura) {
-        return lineasFactura.stream().mapToDouble(l -> l.getCantidad() * l.getPrecioUnitario()).sum();
+        Cliente clienteSeleccionado = cmbCliente.getSelectionModel().getSelectedItem();
+        double descuento = clienteSeleccionado != null ? clienteSeleccionado.getDescuentoCliente() : 0.0;
+
+        double baseImponible = lineasFactura.stream()
+                .mapToDouble(l -> l.getCantidad() * l.getPrecioUnitario())
+                .sum();
+
+        // Aplicar el descuento antes de calcular el IVA
+        return baseImponible - (baseImponible * (descuento / 100));
     }
 
+
     private double calcularIVA(List<LineaFactura> lineasFactura) {
-        return lineasFactura.stream().mapToDouble(l -> l.getCantidad() * l.getPrecioUnitario() * (l.getIva() / 100)).sum();
+        double baseImponibleConDescuento = calcularBaseImponible(lineasFactura);
+        return lineasFactura.stream()
+                .mapToDouble(l -> baseImponibleConDescuento * (l.getIva() / 100))
+                .sum();
     }
+
 
     @FXML
     private void generarPDF() {
@@ -311,7 +366,8 @@ public class CrearFacturaController {
             // Crear factura con datos básicos
             Factura factura = new Factura(
                     numeroFactura, new Date(), idCliente,
-                    calcularBaseImponible(lineasFactura), calcularIVA(lineasFactura),
+                    calcularBaseImponible(lineasFactura),
+                    calcularIVA(lineasFactura),
                     calcularBaseImponible(lineasFactura) + calcularIVA(lineasFactura),
                     false, 1, null
             );
@@ -360,9 +416,9 @@ public class CrearFacturaController {
             String observaciones = txtObservaciones.getText().trim().isEmpty() ? null : txtObservaciones.getText();
 
             Factura factura = new Factura(numeroFactura, new Date(), idCliente,
-                    calcularBaseImponible(lineasFactura),
+                    calcularBaseImponible(lineasFactura), // Base imponible con descuento aplicado
                     ivaSeleccionado,
-                    calcularBaseImponible(lineasFactura) * (1 + ivaSeleccionado / 100),
+                    calcularBaseImponible(lineasFactura) + calcularIVA(lineasFactura), // Total con IVA
                     false, formaPago, fechaCobro);
             factura.setLineasFactura(lineasFactura);
 
