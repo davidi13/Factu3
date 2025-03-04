@@ -7,6 +7,10 @@
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.facturacion.factu3.controllers.EmpresaController">
 
+    <top>
+        <Label text="Mi empresa" style="-fx-font-size: 18px; -fx-font-weight: bold;" BorderPane.alignment="CENTER"/>
+    </top>
+
     <center>
         <GridPane hgap="20" vgap="15" style="-fx-padding: 30;">
             <columnConstraints>

@@ -10,6 +10,9 @@
         <VBox spacing="15" AnchorPane.topAnchor="10.0" AnchorPane.bottomAnchor="10.0"
               AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
 
+            <Label text="Articulos" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+
             <GridPane hgap="10" vgap="10">
                 <columnConstraints>
                     <ColumnConstraints hgrow="SOMETIMES" minWidth="150"/>

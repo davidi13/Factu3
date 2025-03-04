@@ -6,11 +6,13 @@
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.facturacion.factu3.controllers.ClientesController">
 
-
     <children>
 
         <VBox spacing="10" AnchorPane.topAnchor="10.0" AnchorPane.bottomAnchor="10.0"
               AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+
+            <Label text="Clientes" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
 
             <GridPane hgap="10" vgap="10">
                 <columnConstraints>
